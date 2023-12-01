@@ -3,15 +3,7 @@ const APP_NAME = "Focus Timer";
 
 // FIGURE OUT HOW TO ADD INTERRUPTION COUNTERS
 $(document).ready(() => {
-  timerType = "work";
-
-  timer = switchTimer(timerType);
-  updateView();
-
-  stopwatch = new Stopwatch("interruption");
-
-  // Arrow functions don't have 'this'
-  $("#timer-button").on("click", function (e) {
+  function startPageTimer() {
     playButtonSound();
 
     if (!timer.timerRunning()) {
@@ -28,7 +20,17 @@ $(document).ready(() => {
         stopwatchRunningSideEffects
       );
     }
-  });
+  }
+
+  timerType = "work";
+
+  timer = switchTimer(timerType);
+  updateView();
+
+  stopwatch = new Stopwatch("interruption");
+
+  // Arrow functions don't have 'this'
+  $("#timer-button").on("click", startPageTimer);
 
   // DO THE 3D BUTTON EFFECT
   // $('#start-button').mousedown()
@@ -80,6 +82,8 @@ function timerEndSideEffects() {
 
   updateView();
   $("#timer-button").html("START");
+
+  startPageTimer();
 }
 
 function updateView() {
